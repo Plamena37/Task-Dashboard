@@ -25,7 +25,7 @@ function EmployeesContextProvider(props) {
     setAllEmployees(JSON.parse(employeesDataJson) || []);
   }, []);
 
-  //------------------------ Create Note ------------------------
+  //------------------------ Create Employee ------------------------
   /*Explanation
           Set the new state (spread the array allEmployees and add the new note to it)
           Parse the array to string format
@@ -38,7 +38,7 @@ function EmployeesContextProvider(props) {
     localStorage.setItem("employeesData", employeesDataJson);
   };
 
-  //------------------------ Edit Note ------------------------
+  //------------------------ Edit Employee ------------------------
   function editEmployee(employee) {
     const filteredArray = allEmployees.filter(
       (item) => item.id !== employee.id
@@ -49,7 +49,7 @@ function EmployeesContextProvider(props) {
     localStorage.setItem("employeesData", employeesDataJson);
   }
 
-  //------------------------ Delete Note ------------------------
+  //------------------------ Delete Employee ------------------------
   /* Explanation
           Set the new state (removes the item from the state)
           Parse the array from obj to string

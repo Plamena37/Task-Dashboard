@@ -1,0 +1,91 @@
+.pop-up-container.active {
+  /*How to center div with position fixed*/
+  /*
+      - set your desired height
+      - center the div's TOP LEFT corner (top: 50%, left: 50%)
+      - for the margins calculate the NEGATIVE half in px
+   */
+  position: fixed;
+  height: 400px;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -250px;
+
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(94, 52, 153, 0.81);
+  background-color: white;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.exit-button-container {
+  align-self: flex-end;
+}
+
+.exit-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.note {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  padding: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+.title-field {
+  border: none;
+  font-size: 22px;
+  padding: 8px 0 8px 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  color: #294b80;
+}
+
+.title-field:focus {
+  box-shadow: 0px 5px 5px 0px rgba(94, 52, 153, 0.22);
+}
+
+.text-field {
+  border: none;
+  resize: none;
+  overflow: auto;
+  width: 100%;
+  font-size: 17px;
+  padding: 5px;
+  height: 28vh;
+  color: #294b80;
+}
+
+.text-field:focus {
+  box-shadow: 0px 5px 5px 0px rgba(94, 52, 153, 0.3);
+}
+
+.save-changes-button {
+  border: none;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #5293fb;
+  padding: 10px;
+  border-radius: 3px;
+  margin-top: 15px;
+  box-shadow: 0px 5px 5px 0px rgba(94, 52, 153, 0.3);
+
+  color: white;
+  font-size: 16px;
+  width: 50%;
+  transition-duration: 460ms;
+}
