@@ -4,6 +4,7 @@ import { TextField, Button } from "@mui/material";
 import { TasksContext } from "../../context/TasksContextProvider";
 import EditTaskPopUp from "./EditTaskPopUp";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
+import "./AllTasks.css";
 
 const AllTasks = () => {
   const { allTasks, deleteTask } = useContext(TasksContext);
@@ -87,24 +88,27 @@ const AllTasks = () => {
     );
 
     return filteredAllTasks.map((item) => (
-      <div key={item.id} className="note-item">
+      <div key={item.id} className="task__item hover--effect">
         {findAssigneeName(item.assignee)}
-        <h3>Title: {item.title}</h3>
-        <p>Description: {item.description}</p>
-        {/* <p>Assignee: {item.assignee}</p> */}
-        <p>Assignee: {assigneeName}</p>
-        <p>Due to Date: {item.dueDate}</p>
+        <h3 className="task__info task__name">{item.title}</h3>
+        <p className="task__desc">{item.description}</p>
+        <p className="task__info">
+          Assignee: <span className="task__data">{assigneeName}</span>
+        </p>
+        <p className="task__info">
+          Due to Date: <span className="task__data">{item.dueDate}</span>
+        </p>
 
-        <section>
+        <section className="wrapper__buttons">
           <button
-            className="note-item-option-buttons view-button"
+            className="btn edit__btn"
             onClick={() => handleEditTask(item)}
           >
             Edit
           </button>
 
           <button
-            className="note-item-option-buttons delete-button"
+            className="btn delete__btn"
             onClick={() => handleDelete(item)}
           >
             Delete
@@ -115,18 +119,18 @@ const AllTasks = () => {
   };
 
   const noTasksMessage = (
-    <div className="message-container">
+    <div className="message__container">
       <span>Sorry you haven't added any tasks yet.</span>
     </div>
   );
 
   return (
-    <div className="background">
-      <div className="foreground-container">
-        <h1 className="notes-title">Your Tasks</h1>
+    <div className="wrapper">
+      <div className="foreground__container">
+        <h1 className="secondary__title">Your Tasks</h1>
 
-        <div className="wrapper custom-slider">
-          <div className="filter-and-delete-container">
+        <div className="wrapper custom__slider">
+          <div className="filter__and__delete__container">
             {allTasks.length !== 0 && (
               <TextField
                 id="search"
@@ -134,13 +138,13 @@ const AllTasks = () => {
                 label="Search.."
                 variant="outlined"
                 type="text"
-                className="search-bar"
+                className="search__bar"
                 onChange={(event) => setSearchTerm(event.target.value)}
               />
             )}
           </div>
 
-          <div className="all-notes-container">
+          <div className="all__tasks__container">
             {/*Displays the saved tasks*/}
             {allTasks.length === 0 ? noTasksMessage : renderAllTasks()}
           </div>

@@ -1,115 +1,16 @@
-@import url("https://use.fontawesome.com/releases/v6.0.0/css/all.css");
-
 .footer {
-  background-color: var(--gray-light-low);
-  padding: 2rem 5rem;
-  display: grid;
-  gap: 3rem;
-  grid-template-columns: 2fr repeat(3, 1fr);
-  align-items: top;
+  padding: 1.25rem;
+  background-color: #28b485;
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(40, 180, 133, 0.8),
+    rgb(36, 162, 120, 0.8)
+  );
+  color: #f1f1f1;
+  text-align: center;
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.05);
+}
+
+.footer__copyright {
   font-size: 1rem;
-  margin: auto 0;
-  box-shadow: 1px 3px 25px 1px rgba(0, 0, 0, 0.1);
-  margin-top: 5rem;
-}
-
-.footer__desc {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.footer__logo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.footer__logo__img {
-  width: 3rem;
-  filter: brightness(60%);
-}
-
-.footer__logo .router__link.logo > h3 {
-  display: inline-block;
-  font-size: 1.4rem;
-  color: var(--main-purple);
-  letter-spacing: 0.1rem;
-}
-
-.footer__logo__links {
-  display: flex;
-  justify-content: space-evenly;
-  font-size: 1.4rem;
-  color: var(--main-purple);
-  margin-block: 0.5rem;
-}
-
-.footer__logo__links > i {
-  cursor: pointer;
-}
-
-.footer nav > h3 {
-  color: var(--main-purple);
-  font-size: 1.2rem;
-  font-weight: var(--bold-700);
-  margin-bottom: 1.2rem;
-}
-
-nav > p {
-  margin-bottom: 1rem;
-  cursor: pointer;
-}
-
-/*******************************************************/
-/* MEDIA QUERIES */
-/* 900px */
-@media only screen and (min-width: 900px) {
-  .footer {
-    display: grid;
-  }
-  .mobile__footer {
-    display: none;
-  }
-}
-
-/* 900px */
-@media only screen and (max-width: 900px) {
-  .footer {
-    display: none;
-  }
-
-  .mobile__footer {
-    background-color: var(--gray-light-low);
-    padding: 2rem 5rem;
-    box-shadow: 1px 3px 25px 1px rgba(0, 0, 0, 0.1);
-    margin-top: 5rem;
-    text-align: center;
-  }
-
-  .footer__logo__links {
-    justify-content: center;
-    gap: 5rem;
-  }
-
-  .mobile__footer__nav {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .mobile__footer__nav > nav {
-    margin-bottom: 1.5rem;
-  }
-
-  .mobile__footer__nav nav > h3 {
-    color: var(--main-purple);
-    font-size: 1.2rem;
-    font-weight: var(--bold-700);
-    margin-bottom: 0.75rem;
-  }
-  .mobile__footer__nav nav > p {
-    margin-bottom: 0.25rem;
-  }
 }

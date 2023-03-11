@@ -1,0 +1,33 @@
+.all__tasks__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  padding: 2rem;
+  gap: 4rem;
+}
+
+.task__item {
+  background-color: rgba(241, 241, 241, 0.8);
+  padding: 0.25rem 2rem 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.05);
+}
+
+.task__name {
+  font-size: 1.4rem;
+}
+
+.task__desc {
+  font-style: oblique;
+  font-size: 1rem;
+  letter-spacing: 0.02rem;
+  line-height: 1.5rem;
+}
+
+.task__info {
+  font-weight: 600;
+}
+
+.task__data {
+  font-weight: normal;
+}

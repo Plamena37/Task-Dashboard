@@ -3,6 +3,9 @@ import { useContext, useState, useEffect } from "react";
 import { TasksContext } from "../../context/TasksContextProvider";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { ManagersContext } from "../../context/ManagersContextProvider";
+import "./Dashboard.css";
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import ListIcon from "@mui/icons-material/List";
 
 const Dashboard = () => {
   const { allEmployees } = useContext(EmployeeContext);
@@ -64,58 +67,76 @@ const Dashboard = () => {
       let [employee, taskCount] = el;
 
       return (
-        <p>
-          Employee: {employee}, Tasks: {taskCount} 🎉🎉🎉
-        </p>
+        <li className="top__employees__list">
+          <span className="top__employees">{employee}</span>, finished{" "}
+          <span className="top__employees">{taskCount}</span> tasks 🎉🎉🎉
+        </li>
       );
     });
   };
 
   let openTasks = allTasks.map((task) => {
     return (
-      <>
-        <h4>Task: {task.title}</h4>
-        <p>
+      <li className="open__tasks__list hover--effect">
+        <h4 className="open__task__heading">{task.title}</h4>
+        <p className="open__tasks__team">
           Main Team:{" "}
-          {allManagers.map((manager) =>
-            manager.taskWorking == task.id ? (
-              <span>{manager.fullName} </span>
-            ) : (
-              ""
-            )
-          )}
-          {allManagers.map((manager) =>
-            allEmployees.map((employee) => {
-              if (
-                manager.taskWorking == task.id &&
-                manager.employeeWorking == employee.id
-              ) {
-                return <span>{employee.fullName} </span>;
-              }
-            })
-          )}
+          <span className="oblique">
+            {allManagers.map((manager) =>
+              manager.taskWorking == task.id ? (
+                <span>{manager.fullName} </span>
+              ) : (
+                ""
+              )
+            )}
+            ,{" "}
+            {allManagers.map((manager) =>
+              allEmployees.map((employee) => {
+                if (
+                  manager.taskWorking == task.id &&
+                  manager.employeeWorking == employee.id
+                ) {
+                  return <span>{employee.fullName} </span>;
+                }
+              })
+            )}{" "}
+          </span>
           {allEmployees.map((employee) => {
             if (task.assignee == employee.id) {
               return (
-                <p>
-                  Additional Workers: <span>{employee.fullName}</span>
+                <p className="open__tasks__team">
+                  Additional Workers:{" "}
+                  <span className="oblique">{employee.fullName}</span>
                 </p>
               );
             }
           })}
         </p>
-      </>
+      </li>
     );
   });
 
   return (
     <Layout>
-      {topFiveEmployees.length === 0 ? "No employees" : renderResult()}
-      <section>
-        <h2>Open Tasks</h2>
+      <div className="background dashboard__container">
+        <section className="wrapper container top__employees">
+          <div className="section__header">
+            <h2 className="section__heading">Top 5 Employees</h2>
+            <VolunteerActivismIcon className="section__icon" />
+          </div>
+          <ul className="top__employees__container">
+            {topFiveEmployees.length === 0 ? "No employees" : renderResult()}
+          </ul>
+        </section>
 
-        {openTasks}
-      </section>
+        <section className="wrapper container">
+          <div className="section__header">
+            <h2 className="section__heading">Open Tasks</h2>
+            <ListIcon className="section__icon" />
+          </div>
+          <ul className="open__tasks__container">{openTasks}</ul>
+        </section>
+      </div>
     </Layout>
   );
 };

@@ -4,6 +4,7 @@ import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { TextField, Button } from "@mui/material";
 import EditEmployeePopUp from "./EditEmployeePopUp";
 import LoadingSpinner from "../Layout/LoadingSpinner";
+import "./AllEmployees.css";
 
 const AllEmployees = () => {
   const { allEmployees, deleteEmployee, clearAllEmployees } =
@@ -82,23 +83,34 @@ const AllEmployees = () => {
     );
 
     return filteredAllEmployees.map((item) => (
-      <div key={item.id} className="note-item">
-        <h3>Full Name: {item.fullName}</h3>
-        <p>Email: {item.email}</p>
-        <p>Phone Number: {item.phoneNumber}</p>
-        <p>Date of Birth: {item.birthDate}</p>
-        <p>Monthly Salary: {item.monthlySalary}$</p>
+      <div key={item.id} className="employee__item hover--effect">
+        <h3 className="employee__info employee__name">Name: {item.fullName}</h3>
+        <p className="employee__info">
+          Email: <span className="employee__data">{item.email}</span>
+        </p>
+        <p className="employee__info">
+          Phone Number:{" "}
+          <span className="employee__data">{item.phoneNumber}</span>
+        </p>
+        <p className="employee__info">
+          Date of Birth:{" "}
+          <span className="employee__data">{item.birthDate}</span>
+        </p>
+        <p className="employee__info">
+          Monthly Salary:{" "}
+          <span className="employee__data">{item.monthlySalary}$</span>
+        </p>
 
-        <section>
+        <section className="wrapper__buttons">
           <button
-            className="note-item-option-buttons view-button"
+            className="btn edit__btn"
             onClick={() => handleEditEmployee(item)}
           >
             Edit
           </button>
 
           <button
-            className="note-item-option-buttons delete-button"
+            className="btn delete__btn"
             onClick={() => handleDelete(item)}
           >
             Delete
@@ -109,18 +121,18 @@ const AllEmployees = () => {
   };
 
   const noEmployeesMessage = (
-    <div className="message-container">
+    <div className="message__container">
       <span>Sorry you haven't added any employees yet.</span>
     </div>
   );
 
   return (
-    <div className="background">
-      <div className="foreground-container">
-        <h1 className="notes-title">Your Employees</h1>
+    <div className="wrapper">
+      <div className="foreground__container">
+        <h1 className="secondary__title">Your Employees</h1>
 
-        <div className="wrapper custom-slider">
-          <div className="filter-and-delete-container">
+        <div className="wrapper custom__slider">
+          <div className="filter__and__delete__container">
             {allEmployees.length !== 0 && (
               <TextField
                 id="search"
@@ -128,13 +140,13 @@ const AllEmployees = () => {
                 label="Search.."
                 variant="outlined"
                 type="text"
-                className="search-bar"
+                className="search__bar"
                 onChange={(event) => setSearchTerm(event.target.value)}
               />
             )}
           </div>
 
-          <div className="all-notes-container">
+          <div className="all__employees__container">
             {/*Displays the saved employees*/}
             {allEmployees.length === 0
               ? noEmployeesMessage

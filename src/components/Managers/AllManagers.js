@@ -5,6 +5,7 @@ import { ManagersContext } from "../../context/ManagersContextProvider";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { TasksContext } from "../../context/TasksContextProvider";
 import EditManagerPopUp from "./EditManagerPopUp";
+import "./AllManagers.css";
 
 const AllManagers = () => {
   const { allManagers, deleteManager } = useContext(ManagersContext);
@@ -98,7 +99,7 @@ const AllManagers = () => {
     );
 
     return filteredAllManagers.map((item) => (
-      <div key={item.id} className="note-item">
+      <div key={item.id} className="manager__item hover--effect">
         {findTaskName(item.taskWorking)}
         {findAssigneeName(item.employeeWorking)}
         <h3>Name: {item.fullName}</h3>
@@ -107,16 +108,16 @@ const AllManagers = () => {
         <p>Working on: {taskName}</p>
         <p>Working with: {assigneeName}</p>
 
-        <section>
+        <section className="wrapper__buttons">
           <button
-            className="note-item-option-buttons view-button"
+            className="btn edit__btn"
             onClick={() => handleEditManager(item)}
           >
             Edit
           </button>
 
           <button
-            className="note-item-option-buttons delete-button"
+            className="btn delete__btn"
             onClick={() => handleDelete(item)}
           >
             Delete
@@ -127,18 +128,18 @@ const AllManagers = () => {
   };
 
   const noManagersMessage = (
-    <div className="message-container">
+    <div className="message__container">
       <span>Sorry you haven't added any managers yet.</span>
     </div>
   );
 
   return (
-    <div className="background">
-      <div className="foreground-container">
-        <h1 className="notes-title">Your Managers</h1>
+    <div className="wrapper">
+      <div className="foreground__container">
+        <h1 className="secondary__title">Your Managers</h1>
 
-        <div className="wrapper custom-slider">
-          <div className="filter-and-delete-container">
+        <div className="wrapper custom__slider">
+          <div className="filter__and__delete__container">
             {allManagers.length !== 0 && (
               <TextField
                 id="search"
@@ -146,13 +147,13 @@ const AllManagers = () => {
                 label="Search.."
                 variant="outlined"
                 type="text"
-                className="search-bar"
+                className="search__bar"
                 onChange={(event) => setSearchTerm(event.target.value)}
               />
             )}
           </div>
 
-          <div className="all-notes-container">
+          <div className="all__managers__container">
             {/*Displays the saved managers*/}
             {allManagers.length === 0 ? noManagersMessage : renderAllManagers()}
           </div>

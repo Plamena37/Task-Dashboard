@@ -1,0 +1,53 @@
+.dashboard__container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3rem;
+}
+
+.container {
+  background-color: rgba(241, 241, 241, 0.8);
+  border-radius: 0.2rem;
+  padding: 1rem 2rem;
+}
+
+.top__employees__container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  list-style: decimal;
+}
+
+.top__employees__list {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #333;
+}
+
+.top__employees {
+  color: #145a43;
+  font-weight: 600;
+}
+
+.open__tasks__container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  list-style: none;
+  padding: 0 2rem 1rem;
+}
+
+.open__tasks__list {
+  background-color: #24a278;
+  color: #f1f1f1;
+  padding: 0 1rem 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.05);
+}
+
+.open__task__heading {
+  font-size: 1.2rem;
+}
+
+.open__tasks__team {
+  font-weight: 600;
+}

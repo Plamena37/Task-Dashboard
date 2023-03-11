@@ -1,0 +1,17 @@
+.all__managers__container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 3rem;
+}
+
+.manager__item {
+  background-color: rgba(241, 241, 241, 0.8);
+  padding: 0.25rem 1rem 1rem;
+  padding: 1.8rem 2.5rem;
+  border-radius: 0.2rem;
+  justify-self: center;
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.05);
+}

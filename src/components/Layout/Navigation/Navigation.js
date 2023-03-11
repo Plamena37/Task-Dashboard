@@ -3,22 +3,22 @@ import "./Navigation.css";
 
 const Navigation = () => {
   return (
-    <div className="navbar">
-      <div className="nav__logo__wrapper">
-        <Link to="/" className="router__link logo">
-          <h3 className="nav__header">Home</h3>
+    <nav className="navigation">
+      <ul className="navigation__list">
+        <Link to="/" className="router__link">
+          <li className="nav__list__item">Home</li>
         </Link>
-        <Link to="/tasks" className="router__link logo">
-          <h3 className="nav__header">Tasks</h3>
+        <Link to="/tasks" className="router__link">
+          <li className="nav__list__item">Tasks</li>
         </Link>
-        <Link to="/managers" className="router__link logo">
-          <h3 className="nav__header">Managers</h3>
+        <Link to="/managers" className="router__link">
+          <li className="nav__list__item">Managers</li>
         </Link>
-        <Link to="/dashboard" className="router__link logo">
-          <h3 className="nav__header">Dashboard</h3>
+        <Link to="/dashboard" className="router__link">
+          <li className="nav__list__item">Dashboard</li>
         </Link>
-      </div>
-    </div>
+      </ul>
+    </nav>
   );
 };
 

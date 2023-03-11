@@ -14,6 +14,17 @@ import Layout from "../Layout/Layout";
 import { TasksContext } from "../../context/TasksContextProvider";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import AllTasks from "./AllTasks";
+import "./TasksForm.css";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#24a278",
+    },
+  },
+});
 
 const TasksForm = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -74,80 +85,75 @@ const TasksForm = () => {
 
   return (
     <Layout>
-      <div className="employees__layout">
-        <div className="form__header">
-          <h2 className="form__primary__heading">Add new Task</h2>
-          <AddTaskIcon className="form__icon" />
-        </div>
+      <ThemeProvider theme={theme}>
+        <section className="background">
+          <div className="section__header">
+            <h2 className="section__heading">Add Task</h2>
+            <AddTaskIcon className="section__icon" />
+          </div>
 
-        <form className="form__employees" onSubmit={handleSubmit}>
-          <TextField
-            id="title"
-            name="title"
-            value={taskData.title}
-            label="Title"
-            variant="outlined"
-            onChange={handleChange}
-          />
-          <TextField
-            id="description"
-            name="description"
-            value={taskData.description}
-            label="Description"
-            variant="outlined"
-            onChange={handleChange}
-            multiline
-            rows={4}
-          />
-
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-label">Assignee</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="assignee"
-              name="assignee"
-              value={taskData.assignee}
-              label="Assignee"
+          <form className="form__tasks wrapper--white" onSubmit={handleSubmit}>
+            <TextField
+              id="title"
+              name="title"
+              value={taskData.title}
+              label="Title"
+              variant="outlined"
               onChange={handleChange}
+            />
+            <TextField
+              id="description"
+              name="description"
+              value={taskData.description}
+              label="Description"
+              variant="outlined"
+              onChange={handleChange}
+              multiline
+              rows={1}
+            />
+
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-label">Assignee</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="assignee"
+                name="assignee"
+                value={taskData.assignee}
+                label="Assignee"
+                onChange={handleChange}
+              >
+                {allEmployees.map((employee) => (
+                  <MenuItem key={employee.id} value={employee.id}>
+                    {employee.fullName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField
+              id="dueDate"
+              name="dueDate"
+              value={taskData.dueDate}
+              InputLabelProps={{ shrink: true }}
+              label="Due Date"
+              variant="outlined"
+              type="date"
+              onChange={handleChange}
+            />
+
+            <Button
+              startIcon={<AddTaskIcon />}
+              variant="contained"
+              color="primary"
+              type="submit"
+              className="form__btn--tasks"
             >
-              {allEmployees.map((employee) => (
-                <MenuItem key={employee.id} value={employee.id}>
-                  {employee.fullName}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField
-            id="dueDate"
-            name="dueDate"
-            value={taskData.dueDate}
-            InputLabelProps={{ shrink: true }}
-            label="Due Date"
-            variant="outlined"
-            type="date"
-            onChange={handleChange}
-          />
+              Add
+            </Button>
+          </form>
 
-          <Button
-            // style={{
-            //   padding: "1rem 0.6rem",
-            //   borderRadius: "0.3rem",
-            //   width: "100%",
-            //   fontSize: "1.2rem",
-            //   fontWeight: 600,
-            //   cursor: "pointer",
-            // }}
-            startIcon={<AddTaskIcon />}
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            Add
-          </Button>
-        </form>
-
-        <AllTasks />
-      </div>
+          <AllTasks />
+        </section>
+      </ThemeProvider>
     </Layout>
   );
 };

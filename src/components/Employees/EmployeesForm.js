@@ -6,6 +6,17 @@ import { useContext, useState } from "react";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import AllEmployees from "./AllEmployees";
 import Layout from "../Layout/Layout";
+import "./EmployeesForm.css";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#24a278",
+    },
+  },
+});
 
 const EmployeesForm = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -84,82 +95,80 @@ const EmployeesForm = () => {
 
   return (
     <Layout>
-      <div className="employees__layout">
-        <div className="form__header">
-          <h2 className="form__primary__heading">Add Employee</h2>
-          <PersonAddAltIcon className="form__icon" />
-        </div>
+      <ThemeProvider theme={theme}>
+        <section className="background">
+          <div className="section__header">
+            <h2 className="section__heading">Add Employee</h2>
+            <PersonAddAltIcon className="section__icon" />
+          </div>
 
-        <form className="form__employees" onSubmit={handleSubmit}>
-          <TextField
-            id="fullName"
-            name="fullName"
-            value={employeeData.fullName}
-            label="Full Name"
-            variant="outlined"
-            onChange={handleChange}
-          />
-          <TextField
-            id="email"
-            name="email"
-            value={employeeData.email}
-            label="Email"
-            variant="outlined"
-            type="email"
-            onChange={handleChange}
-          />
-          <TextField
-            id="phoneNumber"
-            name="phoneNumber"
-            value={employeeData.phoneNumber}
-            label="Phone Number"
-            variant="outlined"
-            type="number"
-            onChange={handleChange}
-          />
-          <TextField
-            id="birthDate"
-            name="birthDate"
-            value={employeeData.birthDate}
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              inputProps: { max: currentDateFinal },
-            }}
-            label="Birth Date"
-            variant="outlined"
-            type="date"
-            onChange={handleChange}
-          />
-          <TextField
-            id="monthlySalary"
-            name="monthlySalary"
-            value={employeeData.monthlySalary}
-            label="Monthly Salary $"
-            variant="outlined"
-            type="number"
-            onChange={handleChange}
-          />
-
-          <Button
-            // style={{
-            //   padding: "1rem 0.6rem",
-            //   borderRadius: "0.3rem",
-            //   width: "100%",
-            //   fontSize: "1.2rem",
-            //   fontWeight: 600,
-            //   cursor: "pointer",
-            // }}
-            startIcon={<PersonAddAltIcon />}
-            variant="contained"
-            color="primary"
-            type="submit"
+          <form
+            className="form__employees wrapper--white"
+            onSubmit={handleSubmit}
           >
-            Add
-          </Button>
-        </form>
+            <TextField
+              id="fullName"
+              name="fullName"
+              value={employeeData.fullName}
+              label="Full Name"
+              variant="outlined"
+              onChange={handleChange}
+            />
+            <TextField
+              id="email"
+              name="email"
+              value={employeeData.email}
+              label="Email"
+              variant="outlined"
+              type="email"
+              onChange={handleChange}
+            />
+            <TextField
+              id="phoneNumber"
+              name="phoneNumber"
+              value={employeeData.phoneNumber}
+              label="Phone Number"
+              variant="outlined"
+              type="number"
+              onChange={handleChange}
+            />
+            <TextField
+              id="birthDate"
+              name="birthDate"
+              value={employeeData.birthDate}
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                inputProps: { max: currentDateFinal },
+              }}
+              label="Birth Date"
+              variant="outlined"
+              type="date"
+              onChange={handleChange}
+            />
+            <TextField
+              id="monthlySalary"
+              name="monthlySalary"
+              value={employeeData.monthlySalary}
+              label="Monthly Salary $"
+              variant="outlined"
+              type="number"
+              onChange={handleChange}
+            />
 
-        <AllEmployees />
-      </div>
+            <Button
+              startIcon={<PersonAddAltIcon />}
+              variant="contained"
+              color="primary"
+              type="submit"
+              className="form__btn"
+            >
+              Add
+            </Button>
+          </form>
+
+          <AllEmployees />
+        </section>
+      </ThemeProvider>
     </Layout>
   );
 };

@@ -1,0 +1,10 @@
+.form__employees {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.form__btn {
+  width: 7rem;
+}
