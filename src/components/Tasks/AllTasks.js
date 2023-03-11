@@ -7,10 +7,6 @@ import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import "./AllTasks.css";
 
 const AllTasks = () => {
-  const { allTasks, deleteTask } = useContext(TasksContext);
-  const { allEmployees } = useContext(EmployeeContext);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const [selectedTask, setSelectedTask] = useState({
     id: "",
     title: "",
@@ -18,10 +14,18 @@ const AllTasks = () => {
     assignee: "",
     dueDate: "",
   });
+
+  const { allTasks, deleteTask } = useContext(TasksContext);
+
+  const { allEmployees } = useContext(EmployeeContext);
+
   const [popUpActive, setPopUpActive] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState("");
 
-  // HANDLING DELETE LOGIC
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  // ***************** Handle Delete Function with Notistack Pop Up *****************
   const handleDelete = (item) => {
     const action = (key) => (
       <>
@@ -55,10 +59,12 @@ const AllTasks = () => {
     });
   };
 
+  // ***************** Closes the Pop Up *****************
   const clearPopUpActive = () => {
     setPopUpActive(false);
   };
 
+  // ***************** Handle Edit Function *****************
   const handleEditTask = (item) => {
     setPopUpActive(!popUpActive);
     setSelectedTask({
@@ -71,15 +77,20 @@ const AllTasks = () => {
     });
   };
 
+  /* In local storage in tasksData we save the assignee with
+  // his id and not his name and here to retrieve the name we map over the  
+  // employees array to find the employee with the same id as in the task 
+  */
   let assigneeName;
-  const findAssigneeName = (itemId) => {
+  const findAssigneeName = (taskAssigneeId) => {
     allEmployees.map((employee) => {
-      if (employee.id == itemId) {
+      if (employee.id == taskAssigneeId) {
         assigneeName = employee.fullName;
       }
     });
   };
 
+  // ***************** Render All Tasks Function *****************
   const renderAllTasks = () => {
     let filteredAllTasks = allTasks;
 
@@ -118,6 +129,7 @@ const AllTasks = () => {
     ));
   };
 
+  // ***************** Show a message when there are no tasks *****************
   const noTasksMessage = (
     <div className="message__container">
       <span>Sorry you haven't added any tasks yet.</span>
@@ -131,6 +143,7 @@ const AllTasks = () => {
 
         <div className="wrapper custom__slider">
           <div className="filter__and__delete__container">
+            {/* Show search bar only if we have 1 or more tasks */}
             {allTasks.length !== 0 && (
               <TextField
                 id="search"
@@ -145,7 +158,7 @@ const AllTasks = () => {
           </div>
 
           <div className="all__tasks__container">
-            {/*Displays the saved tasks*/}
+            {/*Display the saved tasks*/}
             {allTasks.length === 0 ? noTasksMessage : renderAllTasks()}
           </div>
         </div>

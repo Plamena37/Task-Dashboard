@@ -8,7 +8,7 @@ export const TasksContext = React.createContext({
   deleteTask: () => {},
 });
 
-function TasksContextProvider(props) {
+const TasksContextProvider = ({ children }) => {
   //------------------------ Declare the state ------------------------
   const [allTasks, setAllTasks] = useState([]);
 
@@ -25,20 +25,20 @@ function TasksContextProvider(props) {
   };
 
   //------------------------ Edit Task ------------------------
-  function editTask(task) {
+  const editTask = (task) => {
     const filteredArray = allTasks.filter((item) => item.id !== task.id);
     const newTasks = [task, ...filteredArray];
     setAllTasks(newTasks);
     const tasksDataJson = JSON.stringify(newTasks);
     localStorage.setItem("tasksData", tasksDataJson);
-  }
+  };
 
   //------------------------ Delete Task ------------------------
-  function deleteTask(task) {
+  const deleteTask = (task) => {
     setAllTasks(allTasks.filter((item) => item !== task));
     const tasksDataJson = JSON.stringify(allTasks);
     localStorage.setItem("tasksData", tasksDataJson);
-  }
+  };
 
   return (
     <TasksContext.Provider
@@ -49,9 +49,9 @@ function TasksContextProvider(props) {
         deleteTask: deleteTask,
       }}
     >
-      {props.children}
+      {children}
     </TasksContext.Provider>
   );
-}
+};
 
 export default TasksContextProvider;

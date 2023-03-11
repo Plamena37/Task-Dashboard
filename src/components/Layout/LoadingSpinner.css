@@ -10,9 +10,8 @@
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid var(--main-purple);
-  border-color: var(--purple-dark-med) transparent var(--purple-dark-med)
-    transparent;
+  border: 6px solid #24a278;
+  border-color: #145a43 transparent #145a43 transparent;
   animation: spinner 1.2s linear infinite;
 }
 @keyframes spinner {

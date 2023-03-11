@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
+/* MAIN COLORS */
+/*
+#28b485
+#24a278
+#145a43
+#333
+box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.15);
+*/
+
 body {
   margin: 0;
   padding: 0;
@@ -13,18 +22,7 @@ ul {
   padding: 0;
 }
 
-/* MAIN COLOR */
-/*
-#28b485
-#24a278
-#145a43
-#333
-  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.15);
-*/
-
 .background {
-  background-color: #28b48528;
-  background-color: #d4f0e7;
   width: 85%;
   margin: 0 auto;
   border-radius: 0.5rem;
@@ -36,9 +34,7 @@ ul {
       rgba(255, 255, 255, 0.4),
       rgba(36, 162, 120, 0.4)
     ),
-    url("../src/images/bg-9.jpg");
-  background-position: center;
-  background-position: bottom;
+    url("../src/images/background-image.jpg");
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -63,7 +59,6 @@ ul {
   justify-content: center;
   gap: 0.5rem;
   color: #333;
-
   padding: 0.5rem;
 }
 
@@ -73,6 +68,11 @@ ul {
 
 .section__icon {
   font-size: 2rem;
+}
+
+.secondary__title {
+  text-align: center;
+  font-size: 1.3rem;
 }
 
 .btn {
@@ -91,11 +91,6 @@ ul {
 .btn:hover {
   background-color: #186c50;
   color: #f1f1f1;
-}
-
-.secondary__title {
-  text-align: center;
-  font-size: 1.3rem;
 }
 
 .filter__and__delete__container {
@@ -134,4 +129,9 @@ ul {
 .hover--effect:hover {
   transform: translateY(-0.5rem) scale(1.03);
   box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.08);
+}
+
+.message__container {
+  text-align: center;
+  font-size: 1rem;
 }

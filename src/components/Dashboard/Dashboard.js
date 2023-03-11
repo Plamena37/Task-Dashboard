@@ -3,21 +3,31 @@ import { useContext, useState, useEffect } from "react";
 import { TasksContext } from "../../context/TasksContextProvider";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { ManagersContext } from "../../context/ManagersContextProvider";
-import "./Dashboard.css";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import ListIcon from "@mui/icons-material/List";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const { allEmployees } = useContext(EmployeeContext);
+
   const { allTasks } = useContext(TasksContext);
+
   const { allManagers } = useContext(ManagersContext);
 
-  const [topFiveEmployees, setTopEmployees] = useState([]);
+  const [topFiveEmployees, setTopFiveEmployees] = useState([]);
 
   const employeesAndTasks = {};
   let sortedTasks = [];
 
   useEffect(() => {
+    /*
+    Here we map over the employees and tasks to find which employee on which task is 
+    working and to get his name.
+
+    Then we check in the "employeesAndTasks" object if we have an employee with that name as a key. 
+    If we don't we create one and assign him a value of 1 (for one task),
+    if we already have, we add +1 to the other tasks.
+    */
     allEmployees.map((employee) => {
       allTasks.map((task) => {
         if (employee.id == task.assignee) {
@@ -32,39 +42,26 @@ const Dashboard = () => {
       });
     });
 
+    /*
+    We loop over the "employeesAndTasks" object and push and array with the name and 
+    tasks and we get [["Plamena", 1], ["Hristo", 3]]
+   */
     for (const [employee, task] of Object.entries(employeesAndTasks)) {
       sortedTasks.push([employee, task]);
     }
+
+    /*
+    We sort in descending order according to the tasks and then we set the state
+    with the first 5 from the sorted array
+    */
     sortedTasks.sort((a, b) => b[1] - a[1]);
-    setTopEmployees(sortedTasks.slice(0, 5));
+    setTopFiveEmployees(sortedTasks.slice(0, 5));
   }, []);
 
-  // const getEmployeesWithTheMostTasks = () => {
-  //   allEmployees.map((employee) => {
-  //     allTasks.map((task) => {
-  //       if (employee.id == task.assignee) {
-  //         let employeeName = employee.fullName;
-
-  //         if (!employeesAndTasks[employeeName]) {
-  //           employeesAndTasks[employeeName] = 1;
-  //         } else if (employeesAndTasks[employeeName]) {
-  //           employeesAndTasks[employeeName] += 1;
-  //         }
-  //       }
-  //     });
-  //   });
-
-  //   for (const [employee, task] of Object.entries(employeesAndTasks)) {
-  //     sortedTasks.push([employee, task]);
-  //   }
-  //   sortedTasks.sort((a, b) => b[1] - a[1]);
-
-  //   setTopEmployees(sortedTasks.slice(0, 2));
-  // };
-
-  const renderResult = () => {
-    return topFiveEmployees.map((el) => {
-      let [employee, taskCount] = el;
+  // ***************** Render Top Five Employees Function *****************
+  const renderTopFiveEmployees = () => {
+    return topFiveEmployees.map((employeeArray) => {
+      let [employee, taskCount] = employeeArray;
 
       return (
         <li className="top__employees__list">
@@ -82,6 +79,8 @@ const Dashboard = () => {
         <p className="open__tasks__team">
           Main Team:{" "}
           <span className="oblique">
+            {/* Here we map over the managers array to check if the current task has
+            a manager working on it */}
             {allManagers.map((manager) =>
               manager.taskWorking == task.id ? (
                 <span>{manager.fullName} </span>
@@ -90,6 +89,8 @@ const Dashboard = () => {
               )
             )}
             ,{" "}
+            {/* Here we map over the managers array to check if the manager is working 
+            together with an employee on the current task */}
             {allManagers.map((manager) =>
               allEmployees.map((employee) => {
                 if (
@@ -101,6 +102,8 @@ const Dashboard = () => {
               })
             )}{" "}
           </span>
+          {/* Here we map over the employees array to check if the current task
+          has any employee working on it */}
           {allEmployees.map((employee) => {
             if (task.assignee == employee.id) {
               return (
@@ -125,7 +128,9 @@ const Dashboard = () => {
             <VolunteerActivismIcon className="section__icon" />
           </div>
           <ul className="top__employees__container">
-            {topFiveEmployees.length === 0 ? "No employees" : renderResult()}
+            {topFiveEmployees.length === 0
+              ? "No employees"
+              : renderTopFiveEmployees()}
           </ul>
         </section>
 

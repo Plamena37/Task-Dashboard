@@ -14,10 +14,11 @@ import Layout from "../Layout/Layout";
 import { TasksContext } from "../../context/TasksContextProvider";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import AllTasks from "./AllTasks";
-import "./TasksForm.css";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
+import "./TasksForm.css";
 
+// Create a custom theme for the Material UI components
 const theme = createTheme({
   palette: {
     primary: {
@@ -30,6 +31,7 @@ const TasksForm = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { allEmployees } = useContext(EmployeeContext);
+
   const { addToTasksData } = useContext(TasksContext);
 
   const [taskData, setTaskData] = useState({
@@ -40,15 +42,18 @@ const TasksForm = () => {
     dueDate: "",
   });
 
+  // ***************** Handle Change Function *****************
   const handleChange = (event) => {
     const { value, name } = event.target;
 
+    // Having controlled input
     setTaskData({
       ...taskData,
       [name]: value,
     });
   };
 
+  // ***************** Handle Submit Function *****************
   const handleSubmit = (event) => {
     //Prevents the page from reloading
     event.preventDefault();
@@ -66,7 +71,7 @@ const TasksForm = () => {
       });
     } else {
       setTaskData(taskData);
-      //Sets the new task
+      //Set the new task
       addToTasksData(taskData);
       enqueueSnackbar("Task added!", {
         variant: "success",
@@ -101,6 +106,7 @@ const TasksForm = () => {
               variant="outlined"
               onChange={handleChange}
             />
+
             <TextField
               id="description"
               name="description"
@@ -129,6 +135,7 @@ const TasksForm = () => {
                 ))}
               </Select>
             </FormControl>
+
             <TextField
               id="dueDate"
               name="dueDate"

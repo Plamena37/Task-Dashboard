@@ -8,7 +8,7 @@ export const ManagersContext = React.createContext({
   deleteManager: () => {},
 });
 
-function ManagersContextProvider(props) {
+const ManagersContextProvider = ({ children }) => {
   //------------------------ Declare the state ------------------------
   const [allManagers, setAllManagers] = useState([]);
 
@@ -25,20 +25,20 @@ function ManagersContextProvider(props) {
   };
 
   //------------------------ Edit Task ------------------------
-  function editManager(manager) {
+  const editManager = (manager) => {
     const filteredArray = allManagers.filter((item) => item.id !== manager.id);
     const newManagers = [manager, ...filteredArray];
     setAllManagers(newManagers);
     const managersDataJson = JSON.stringify(newManagers);
     localStorage.setItem("managersData", managersDataJson);
-  }
+  };
 
   //------------------------ Delete Task ------------------------
-  function deleteManager(manager) {
+  const deleteManager = (manager) => {
     setAllManagers(allManagers.filter((item) => item !== manager));
     const managersDataJson = JSON.stringify(allManagers);
     localStorage.setItem("managersData", managersDataJson);
-  }
+  };
 
   return (
     <ManagersContext.Provider
@@ -49,9 +49,9 @@ function ManagersContextProvider(props) {
         deleteManager: deleteManager,
       }}
     >
-      {props.children}
+      {children}
     </ManagersContext.Provider>
   );
-}
+};
 
 export default ManagersContextProvider;

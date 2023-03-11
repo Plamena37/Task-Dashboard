@@ -6,10 +6,11 @@ import { useContext, useState } from "react";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import AllEmployees from "./AllEmployees";
 import Layout from "../Layout/Layout";
-import "./EmployeesForm.css";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
+import "./EmployeesForm.css";
 
+// Create a custom theme for the Material UI components
 const theme = createTheme({
   palette: {
     primary: {
@@ -19,10 +20,6 @@ const theme = createTheme({
 });
 
 const EmployeesForm = () => {
-  const { enqueueSnackbar } = useSnackbar();
-
-  const { addToEmployeesData } = useContext(EmployeeContext);
-
   const [employeeData, setEmployeeData] = useState({
     id: uuidv4(),
     fullName: "",
@@ -32,7 +29,11 @@ const EmployeesForm = () => {
     monthlySalary: 0,
   });
 
-  // Getting current date
+  const { addToEmployeesData } = useContext(EmployeeContext);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  // Get the current date
   let currentDate = new Date();
 
   // Creating yyyy-mm-dd current date format
@@ -48,6 +49,7 @@ const EmployeesForm = () => {
   }
   const currentDateFinal = `${currentYear}-${currentMonth}-${currentDay}`;
 
+  // ***************** Handle Change Function *****************
   const handleChange = (event) => {
     const { value, name } = event.target;
 
@@ -57,6 +59,7 @@ const EmployeesForm = () => {
     });
   };
 
+  // ***************** Handle Submit Function *****************
   const handleSubmit = (event) => {
     //Prevents the page from reloading
     event.preventDefault();
@@ -114,6 +117,7 @@ const EmployeesForm = () => {
               variant="outlined"
               onChange={handleChange}
             />
+
             <TextField
               id="email"
               name="email"
@@ -123,6 +127,7 @@ const EmployeesForm = () => {
               type="email"
               onChange={handleChange}
             />
+
             <TextField
               id="phoneNumber"
               name="phoneNumber"
@@ -132,6 +137,9 @@ const EmployeesForm = () => {
               type="number"
               onChange={handleChange}
             />
+
+            {/* In props we have "max: currentDateFinal" so that 
+                a user can not pick a future day as his birth day */}
             <TextField
               id="birthDate"
               name="birthDate"
@@ -145,6 +153,7 @@ const EmployeesForm = () => {
               type="date"
               onChange={handleChange}
             />
+
             <TextField
               id="monthlySalary"
               name="monthlySalary"

@@ -3,10 +3,11 @@ import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { Button, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import CreateIcon from "@mui/icons-material/Create";
-import "../../EditPopUp.css";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
+import "../../EditPopUp.css";
 
+// Create a custom theme for the Material UI components
 const theme = createTheme({
   palette: {
     primary: {
@@ -24,8 +25,10 @@ const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
     birthDate: employee.birthDate,
     monthlySalary: employee.monthlySalary,
   });
+
   const { editEmployee } = useContext(EmployeeContext);
 
+  // ***************** Handle Change Function *****************
   const handleChange = (event) => {
     const { value, name } = event.target;
 
@@ -35,8 +38,10 @@ const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
     });
   };
 
+  // ***************** Handle Submit Function *****************
   const handleSubmit = (event) => {
     event.preventDefault();
+
     editEmployee(editedEmployee);
     clear();
   };
@@ -59,6 +64,7 @@ const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
             variant="outlined"
             onChange={handleChange}
           />
+
           <TextField
             id="email"
             name="email"
@@ -68,6 +74,7 @@ const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
             type="email"
             onChange={handleChange}
           />
+
           <TextField
             id="phoneNumber"
             name="phoneNumber"
@@ -77,6 +84,7 @@ const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
             type="number"
             onChange={handleChange}
           />
+
           <TextField
             id="birthDate"
             name="birthDate"
@@ -87,6 +95,7 @@ const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
             type="date"
             onChange={handleChange}
           />
+
           <TextField
             id="monthlySalary"
             name="monthlySalary"

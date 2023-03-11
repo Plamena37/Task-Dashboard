@@ -37,7 +37,7 @@
 }
 
 .open__tasks__list {
-  background-color: #24a278;
+  background-color: rgb(36, 162, 120, 0.9);
   color: #f1f1f1;
   padding: 0 1rem 1rem;
   border-radius: 0.2rem;
@@ -46,8 +46,11 @@
 
 .open__task__heading {
   font-size: 1.2rem;
+  color: #d4f0e7ed;
+  color: #145a43;
 }
 
 .open__tasks__team {
   font-weight: 600;
+  color: #eaf8f3;
 }

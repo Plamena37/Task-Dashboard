@@ -7,10 +7,6 @@ import LoadingSpinner from "../Layout/LoadingSpinner";
 import "./AllEmployees.css";
 
 const AllEmployees = () => {
-  const { allEmployees, deleteEmployee, clearAllEmployees } =
-    useContext(EmployeeContext);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const [selectedEmployee, setSelectedEmployee] = useState({
     id: "",
     fullName: "",
@@ -19,10 +15,16 @@ const AllEmployees = () => {
     birthDate: "",
     monthlySalary: 0,
   });
+
+  const { allEmployees, deleteEmployee } = useContext(EmployeeContext);
+
   const [popUpActive, setPopUpActive] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState("");
 
-  // HANDLING DELETE LOGIC
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  // ***************** Handle Delete Function with Notistack Pop Up *****************
   const handleDelete = (item) => {
     const action = (key) => (
       <>
@@ -56,10 +58,12 @@ const AllEmployees = () => {
     });
   };
 
+  // ***************** Closes the Pop Up *****************
   const clearPopUpActive = () => {
     setPopUpActive(false);
   };
 
+  // ***************** Handle Edit Function *****************
   const handleEditEmployee = (item) => {
     setPopUpActive(!popUpActive);
     setSelectedEmployee({
@@ -73,8 +77,12 @@ const AllEmployees = () => {
     });
   };
 
+  // ***************** Render All Employees Function *****************
   const renderAllEmployees = () => {
     let filteredAllEmployees;
+
+    // If there are no filteredAllEmployees it should
+    // trigger a loading spinner until the data is loaded
     !filteredAllEmployees && <LoadingSpinner />;
     filteredAllEmployees = allEmployees;
 
@@ -120,6 +128,7 @@ const AllEmployees = () => {
     ));
   };
 
+  // ***************** Show a message when there are no employees *****************
   const noEmployeesMessage = (
     <div className="message__container">
       <span>Sorry you haven't added any employees yet.</span>
@@ -133,6 +142,7 @@ const AllEmployees = () => {
 
         <div className="wrapper custom__slider">
           <div className="filter__and__delete__container">
+            {/* Show search bar only if we have 1 or more employees */}
             {allEmployees.length !== 0 && (
               <TextField
                 id="search"

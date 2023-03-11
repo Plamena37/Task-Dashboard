@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import CreateIcon from "@mui/icons-material/Create";
-import "./EditManagerPopUp.css";
 import { ManagersContext } from "../../context/ManagersContextProvider";
-import "../../EditPopUp.css";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
+import "../../EditPopUp.css";
 
+// Create a custom theme for the Material UI components
 const theme = createTheme({
   palette: {
     primary: {
@@ -32,10 +32,14 @@ const EditManagerPopUp = ({ manager, popUpActive, clear }) => {
     taskWorking: manager.taskWorking,
     employeeWorking: manager.employeeWorking,
   });
+
   const { editManager } = useContext(ManagersContext);
+
   const { allEmployees } = useContext(EmployeeContext);
+
   const { allTasks } = useContext(TasksContext);
 
+  // ***************** Handle Change Function *****************
   const handleChange = (event) => {
     const { value, name } = event.target;
 
@@ -45,8 +49,10 @@ const EditManagerPopUp = ({ manager, popUpActive, clear }) => {
     });
   };
 
+  // ***************** Handle Submit Function *****************
   const handleSubmit = (event) => {
     event.preventDefault();
+
     editManager(editedManager);
     clear();
   };
@@ -73,6 +79,7 @@ const EditManagerPopUp = ({ manager, popUpActive, clear }) => {
             variant="outlined"
             onChange={handleChange}
           />
+
           <TextField
             id="email"
             name="email"

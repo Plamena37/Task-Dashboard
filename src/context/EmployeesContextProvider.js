@@ -6,16 +6,15 @@ export const EmployeeContext = React.createContext({
   addToEmployeesData: () => {},
   editEmployee: () => {},
   deleteEmployee: () => {},
-  clearAllEmployees: () => {},
 });
 
-function EmployeesContextProvider(props) {
+const EmployeesContextProvider = ({ children }) => {
   //------------------------ Declare the state ------------------------
   const [allEmployees, setAllEmployees] = useState([]);
 
   /* Explanation
-          Gets the current notesData from the local browser storage
-          Set the state (parses the data from a string to obj, or display an empty array if there is no data)
+          Get the current employeesData from the local storage
+          Set the state (parses the data from a string to object, or display an empty array if there is no data)
   
           Note: This is a useEffect hook that means this is a side effect to the main functionality of the component.
           You can set this hook to be initialized only once by setting the second parameter to [].
@@ -27,7 +26,7 @@ function EmployeesContextProvider(props) {
 
   //------------------------ Create Employee ------------------------
   /*Explanation
-          Set the new state (spread the array allEmployees and add the new note to it)
+          Set the new state (spread the array allEmployees and add the new employee to it)
           Parse the array to string format
           Update the local storage
       */
@@ -39,7 +38,7 @@ function EmployeesContextProvider(props) {
   };
 
   //------------------------ Edit Employee ------------------------
-  function editEmployee(employee) {
+  const editEmployee = (employee) => {
     const filteredArray = allEmployees.filter(
       (item) => item.id !== employee.id
     );
@@ -47,37 +46,19 @@ function EmployeesContextProvider(props) {
     setAllEmployees(newEmployees);
     const employeesDataJson = JSON.stringify(newEmployees);
     localStorage.setItem("employeesData", employeesDataJson);
-  }
+  };
 
   //------------------------ Delete Employee ------------------------
   /* Explanation
-          Set the new state (removes the item from the state)
-          Parse the array from obj to string
+          Set the new state (remove the item from the state)
+          Parse the array from object to string
           Update the local storage
       */
-  function deleteEmployee(employee) {
+  const deleteEmployee = (employee) => {
     setAllEmployees(allEmployees.filter((item) => item !== employee));
     const employeesDataJson = JSON.stringify(allEmployees);
     localStorage.setItem("employeesData", employeesDataJson);
-  }
-
-  // ------------------------ Delete all Notes ------------------------
-  /* Explanation
-          Check if the array is empty
-          empty:
-              - Displays an alert that shows there is no notes to delete
-          not empty:
-              - Clears the value of allEmployees array
-              - Clears the local storage
-      */
-  function clearAllEmployees() {
-    if (allEmployees.length === 0) {
-      alert("There are no employees to delete..");
-    } else {
-      setAllEmployees([]);
-      localStorage.clear();
-    }
-  }
+  };
 
   return (
     <EmployeeContext.Provider
@@ -86,13 +67,12 @@ function EmployeesContextProvider(props) {
         addToEmployeesData: addToEmployeesData,
         editEmployee: editEmployee,
         deleteEmployee: deleteEmployee,
-        clearAllEmployees: clearAllEmployees,
       }}
     >
-      {/*Passes down all of the functions*/}
-      {props.children}
+      {/*Passe down all of the functions*/}
+      {children}
     </EmployeeContext.Provider>
   );
-}
+};
 
 export default EmployeesContextProvider;

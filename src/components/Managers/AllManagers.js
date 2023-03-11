@@ -8,11 +8,6 @@ import EditManagerPopUp from "./EditManagerPopUp";
 import "./AllManagers.css";
 
 const AllManagers = () => {
-  const { allManagers, deleteManager } = useContext(ManagersContext);
-  const { allEmployees } = useContext(EmployeeContext);
-  const { allTasks } = useContext(TasksContext);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const [selectedManager, setSelectedManager] = useState({
     id: "",
     fullName: "",
@@ -20,10 +15,20 @@ const AllManagers = () => {
     taskWorking: "",
     employeeWorking: "",
   });
+
+  const { allManagers, deleteManager } = useContext(ManagersContext);
+
+  const { allEmployees } = useContext(EmployeeContext);
+
+  const { allTasks } = useContext(TasksContext);
+
   const [popUpActive, setPopUpActive] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState("");
 
-  // HANDLING DELETE LOGIC
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  // ***************** Handle Delete Function with Notistack Pop Up *****************
   const handleDelete = (item) => {
     const action = (key) => (
       <>
@@ -57,10 +62,12 @@ const AllManagers = () => {
     });
   };
 
+  // ***************** Closes the Pop Up *****************
   const clearPopUpActive = () => {
     setPopUpActive(false);
   };
 
+  // ***************** Handle Edit Function *****************
   const handleEditManager = (item) => {
     setPopUpActive(!popUpActive);
     setSelectedManager({
@@ -73,24 +80,29 @@ const AllManagers = () => {
     });
   };
 
+  /* In local storage in managersData we save the employee and task with
+  // their ids and not names and here to retrieve the names we map over the  
+  // managers array to find the employee and task with the same id
+  */
   let assigneeName;
-  const findAssigneeName = (itemId) => {
+  const findAssigneeName = (managerAssigneeId) => {
     allEmployees.map((employee) => {
-      if (employee.id == itemId) {
+      if (employee.id == managerAssigneeId) {
         assigneeName = employee.fullName;
       }
     });
   };
 
   let taskName;
-  const findTaskName = (itemId) => {
+  const findTaskName = (managerTaskId) => {
     allTasks.map((task) => {
-      if (task.id == itemId) {
+      if (task.id == managerTaskId) {
         taskName = task.title;
       }
     });
   };
 
+  // ***************** Render All Managers Function *****************
   const renderAllManagers = () => {
     let filteredAllManagers = allManagers;
 
@@ -104,7 +116,6 @@ const AllManagers = () => {
         {findAssigneeName(item.employeeWorking)}
         <h3>Name: {item.fullName}</h3>
         <p>Email: {item.email}</p>
-        {/* <p>Working on: {item.taskWorking}</p> */}
         <p>Working on: {taskName}</p>
         <p>Working with: {assigneeName}</p>
 
@@ -127,6 +138,7 @@ const AllManagers = () => {
     ));
   };
 
+  // ***************** Show a message when there are no tasks *****************
   const noManagersMessage = (
     <div className="message__container">
       <span>Sorry you haven't added any managers yet.</span>
@@ -140,6 +152,7 @@ const AllManagers = () => {
 
         <div className="wrapper custom__slider">
           <div className="filter__and__delete__container">
+            {/* Show search bar only if we have 1 or more manager */}
             {allManagers.length !== 0 && (
               <TextField
                 id="search"

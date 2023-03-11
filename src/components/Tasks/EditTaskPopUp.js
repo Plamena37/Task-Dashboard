@@ -3,7 +3,6 @@ import { TasksContext } from "../../context/TasksContextProvider";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import {
   TextField,
-  Button,
   InputLabel,
   MenuItem,
   FormControl,
@@ -11,10 +10,11 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import CreateIcon from "@mui/icons-material/Create";
-import "../../EditPopUp.css";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
+import "../../EditPopUp.css";
 
+// Create a custom theme for the Material UI components
 const theme = createTheme({
   palette: {
     primary: {
@@ -31,9 +31,12 @@ const EditTaskPopUp = ({ task, popUpActive, clear }) => {
     assignee: task.assignee,
     dueDate: task.dueDate,
   });
+
   const { editTask } = useContext(TasksContext);
+
   const { allEmployees } = useContext(EmployeeContext);
 
+  // ***************** Handle Change Function *****************
   const handleChange = (event) => {
     const { value, name } = event.target;
 
@@ -43,8 +46,10 @@ const EditTaskPopUp = ({ task, popUpActive, clear }) => {
     });
   };
 
+  // ***************** Handle Submit Function *****************
   const handleSubmit = (event) => {
     event.preventDefault();
+
     editTask(editedTask);
     clear();
   };
@@ -67,6 +72,7 @@ const EditTaskPopUp = ({ task, popUpActive, clear }) => {
             variant="outlined"
             onChange={handleChange}
           />
+
           <TextField
             id="description"
             name="description"
@@ -98,6 +104,7 @@ const EditTaskPopUp = ({ task, popUpActive, clear }) => {
               ))}
             </Select>
           </FormControl>
+
           <TextField
             id="dueDate"
             name="dueDate"
