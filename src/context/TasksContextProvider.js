@@ -12,24 +12,11 @@ function TasksContextProvider(props) {
   //------------------------ Declare the state ------------------------
   const [allTasks, setAllTasks] = useState([]);
 
-  /* Explanation
-          Gets the current notesData from the local browser storage
-          Set the state (parses the data from a string to obj, or display an empty array if there is no data)
-  
-          Note: This is a useEffect hook that means this is a side effect to the main functionality of the component.
-          You can set this hook to be initialized only once by setting the second parameter to [].
-      */
   useEffect(() => {
     const tasksDataJson = localStorage.getItem("tasksData");
     setAllTasks(JSON.parse(tasksDataJson) || []);
   }, []);
 
-  //------------------------ Create Task ------------------------
-  /*Explanation
-          Set the new state (spread the array allTasks and add the new note to it)
-          Parse the array to string format
-          Update the local storage
-      */
   const addToTasksData = (newTask) => {
     const newTasks = [newTask, ...allTasks];
     setAllTasks(newTasks);
@@ -47,11 +34,6 @@ function TasksContextProvider(props) {
   }
 
   //------------------------ Delete Task ------------------------
-  /* Explanation
-          Set the new state (removes the item from the state)
-          Parse the array from obj to string
-          Update the local storage
-      */
   function deleteTask(task) {
     setAllTasks(allTasks.filter((item) => item !== task));
     const tasksDataJson = JSON.stringify(allTasks);
@@ -67,7 +49,6 @@ function TasksContextProvider(props) {
         deleteTask: deleteTask,
       }}
     >
-      {/*Passes down all of the functions*/}
       {props.children}
     </TasksContext.Provider>
   );

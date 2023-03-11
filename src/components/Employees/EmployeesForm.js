@@ -21,6 +21,22 @@ const EmployeesForm = () => {
     monthlySalary: 0,
   });
 
+  // Getting current date
+  let currentDate = new Date();
+
+  // Creating yyyy-mm-dd current date format
+  let currentYear = currentDate.getFullYear().toString();
+  let currentMonth = currentDate.getMonth() + 1;
+  let currentDay = currentDate.getDate();
+
+  if (currentMonth < 10) {
+    currentMonth = `0${currentMonth}`;
+  }
+  if (currentDay < 10) {
+    currentDay = `0${currentDay}`;
+  }
+  const currentDateFinal = `${currentYear}-${currentMonth}-${currentDay}`;
+
   const handleChange = (event) => {
     const { value, name } = event.target;
 
@@ -37,7 +53,7 @@ const EmployeesForm = () => {
     if (
       employeeData.fullName === "" ||
       employeeData.email === "" ||
-      employeeData.phoneNumber.length < 10 ||
+      employeeData.phoneNumber.length < 9 ||
       employeeData.birthDate === "" ||
       employeeData.monthlySalary === 0
     ) {
@@ -70,7 +86,7 @@ const EmployeesForm = () => {
     <Layout>
       <div className="employees__layout">
         <div className="form__header">
-          <h2 className="form__primary__heading">Add new Employee</h2>
+          <h2 className="form__primary__heading">Add Employee</h2>
           <PersonAddAltIcon className="form__icon" />
         </div>
 
@@ -106,6 +122,9 @@ const EmployeesForm = () => {
             name="birthDate"
             value={employeeData.birthDate}
             InputLabelProps={{ shrink: true }}
+            InputProps={{
+              inputProps: { max: currentDateFinal },
+            }}
             label="Birth Date"
             variant="outlined"
             type="date"

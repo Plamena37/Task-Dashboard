@@ -11,6 +11,12 @@ const Navigation = () => {
         <Link to="/tasks" className="router__link logo">
           <h3 className="nav__header">Tasks</h3>
         </Link>
+        <Link to="/managers" className="router__link logo">
+          <h3 className="nav__header">Managers</h3>
+        </Link>
+        <Link to="/dashboard" className="router__link logo">
+          <h3 className="nav__header">Dashboard</h3>
+        </Link>
       </div>
     </div>
   );

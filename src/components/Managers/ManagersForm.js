@@ -1,0 +1,166 @@
+import { useSnackbar } from "notistack";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import {
+  TextField,
+  Button,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+} from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
+import { useContext, useState } from "react";
+import Layout from "../Layout/Layout";
+import { TasksContext } from "../../context/TasksContextProvider";
+import { EmployeeContext } from "../../context/EmployeesContextProvider";
+import { ManagersContext } from "../../context/ManagersContextProvider";
+import AllManagers from "./AllManagers";
+
+const ManagersForm = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { allEmployees } = useContext(EmployeeContext);
+  const { allTasks } = useContext(TasksContext);
+  const { allManagers, addToManagersData } = useContext(ManagersContext);
+
+  const [managerData, setManagerData] = useState({
+    id: uuidv4(),
+    fullName: "",
+    email: "",
+    taskWorking: "",
+    employeeWorking: "",
+  });
+
+  const handleChange = (event) => {
+    const { value, name } = event.target;
+
+    setManagerData({
+      ...managerData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    //Prevents the page from reloading
+    event.preventDefault();
+
+    if (
+      managerData.fullName === "" ||
+      managerData.email === "" ||
+      managerData.taskWorking === "" ||
+      managerData.employeeWorking === ""
+    ) {
+      //Check if the form is empty
+      enqueueSnackbar("Please fill all of the fields before submitting!", {
+        variant: "info",
+        preventDuplicate: true,
+      });
+    } else {
+      setManagerData(managerData);
+      //Sets the new task
+      addToManagersData(managerData);
+      enqueueSnackbar("Task added!", {
+        variant: "success",
+      });
+    }
+
+    //Clear the form after submission.
+    setManagerData({
+      id: uuidv4(),
+      fullName: "",
+      email: "",
+      taskWorking: "",
+      employeeWorking: "",
+    });
+  };
+
+  return (
+    <Layout>
+      <div className="employees__layout">
+        <div className="form__header">
+          <h2 className="form__primary__heading">Add Manager</h2>
+          <ManageAccountsIcon className="form__icon" />
+        </div>
+
+        <form className="form__employees" onSubmit={handleSubmit}>
+          <TextField
+            id="fullName"
+            name="fullName"
+            value={managerData.fullName}
+            label="Full Name"
+            variant="outlined"
+            onChange={handleChange}
+          />
+          <TextField
+            id="email"
+            name="email"
+            value={managerData.email}
+            label="Email"
+            variant="outlined"
+            type="email"
+            onChange={handleChange}
+          />
+
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-label">
+              Working on task:
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="taskWorking"
+              name="taskWorking"
+              value={managerData.taskWorking}
+              label="Working on task:"
+              onChange={handleChange}
+            >
+              {allTasks.map((task) => (
+                <MenuItem key={task.id} value={task.id}>
+                  {task.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-label">Working with:</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="employeeWorking"
+              name="employeeWorking"
+              value={managerData.employeeWorking}
+              label="Working with:"
+              onChange={handleChange}
+            >
+              {allEmployees.map((employee) => (
+                <MenuItem key={employee.id} value={employee.id}>
+                  {employee.fullName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <Button
+            // style={{
+            //   padding: "1rem 0.6rem",
+            //   borderRadius: "0.3rem",
+            //   width: "100%",
+            //   fontSize: "1.2rem",
+            //   fontWeight: 600,
+            //   cursor: "pointer",
+            // }}
+            startIcon={<ManageAccountsIcon />}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Add
+          </Button>
+        </form>
+
+        <AllManagers />
+      </div>
+    </Layout>
+  );
+};
+
+export default ManagersForm;
