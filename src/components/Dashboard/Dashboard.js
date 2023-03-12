@@ -117,14 +117,6 @@ const Dashboard = () => {
   const renderTopFiveEmployees = () => {
     return topFiveEmployees.map((employeeArray) => {
       let [employee, taskCount] = employeeArray;
-      console.log(unfinishedTasks);
-      // let todaysDate = new Date();
-      // let taskDueDate = new Date(dueDate);
-
-      // If the task's due date has already passed we return and don't show it
-      // if (taskDueDate.getTime() < todaysDate.getTime()) {
-      //   return;
-      // }
 
       return (
         <li className="top__employees__list">
@@ -230,9 +222,7 @@ const Dashboard = () => {
 
         <section className="wrapper container top__employees">
           <div className="section__header">
-            <h2 className="section__heading">
-              Completed tasks in the last 30 days
-            </h2>
+            <h2 className="section__heading">Last Month Credits</h2>
             <PlaylistAddCheckIcon className="section__icon" />
           </div>
           <ul className="top__employees__container special">
