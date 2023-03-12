@@ -135,6 +135,9 @@ ul {
 .message__container {
   text-align: center;
   font-size: 1rem;
+  grid-column: 1/-1;
+  font-weight: normal;
+  color: #333;
 }
 
 .btn__change__container {

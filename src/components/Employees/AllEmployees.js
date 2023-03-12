@@ -5,6 +5,7 @@ import { TextField, Button } from "@mui/material";
 import EditEmployeePopUp from "./EditEmployeePopUp";
 import LoadingSpinner from "../Layout/LoadingSpinner";
 import CelebrationIcon from "@mui/icons-material/Celebration";
+import Tooltip from "@mui/material/Tooltip";
 import "./AllEmployees.css";
 
 const AllEmployees = () => {
@@ -153,9 +154,14 @@ const AllEmployees = () => {
       <div className="foreground__container">
         <h1 className="secondary__title">Your Employees</h1>
         <div className="btn__change__container">
-          <button className="btn btn--change-style" onClick={handleChangeStyle}>
-            click me <CelebrationIcon />
-          </button>
+          <Tooltip title="Must have at least one employee" placement="top">
+            <button
+              className="btn btn--change-style"
+              onClick={handleChangeStyle}
+            >
+              click me <CelebrationIcon />
+            </button>
+          </Tooltip>
         </div>
 
         <div className="wrapper custom__slider">

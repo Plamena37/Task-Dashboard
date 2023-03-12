@@ -5,6 +5,7 @@ import { TasksContext } from "../../context/TasksContextProvider";
 import EditTaskPopUp from "./EditTaskPopUp";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import CelebrationIcon from "@mui/icons-material/Celebration";
+import Tooltip from "@mui/material/Tooltip";
 import "./AllTasks.css";
 
 const AllTasks = () => {
@@ -154,9 +155,14 @@ const AllTasks = () => {
       <div className="foreground__container">
         <h1 className="secondary__title">Your Tasks</h1>
         <div className="btn__change__container">
-          <button className="btn btn--change-style" onClick={handleChangeStyle}>
-            click me <CelebrationIcon />
-          </button>
+          <Tooltip title="Must have at least one task" placement="top">
+            <button
+              className="btn btn--change-style"
+              onClick={handleChangeStyle}
+            >
+              click me <CelebrationIcon />
+            </button>
+          </Tooltip>
         </div>
 
         <div className="wrapper custom__slider">

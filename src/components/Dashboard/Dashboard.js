@@ -7,6 +7,7 @@ import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import ListIcon from "@mui/icons-material/List";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
+import Tooltip from "@mui/material/Tooltip";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -214,9 +215,11 @@ const Dashboard = () => {
             <VolunteerActivismIcon className="section__icon" />
           </div>
           <ul className="top__employees__container">
-            {topFiveEmployees.length === 0
-              ? "No employees"
-              : renderTopFiveEmployees()}
+            {topFiveEmployees.length === 0 ? (
+              <p className="message__container">No employees..</p>
+            ) : (
+              renderTopFiveEmployees()
+            )}
           </ul>
         </section>
 
@@ -226,9 +229,13 @@ const Dashboard = () => {
             <PlaylistAddCheckIcon className="section__icon" />
           </div>
           <ul className="top__employees__container special">
-            {employeesWhoCompletedTasksBefore30Days.length === 0
-              ? "No tasks finished in the last 30 days"
-              : employeesWhoCompletedTasksBefore30Days}
+            {employeesWhoCompletedTasksBefore30Days.length === 0 ? (
+              <p className="message__container">
+                No tasks finished in the last 30 days..
+              </p>
+            ) : (
+              employeesWhoCompletedTasksBefore30Days
+            )}
           </ul>
         </section>
 
@@ -238,14 +245,22 @@ const Dashboard = () => {
             <ListIcon className="section__icon" />
           </div>
           <div className="btn__change__container">
-            <button
-              className="btn btn--change-style"
-              onClick={handleChangeStyle}
-            >
-              click me <CelebrationIcon />
-            </button>
+            <Tooltip title="Must have at least one open task" placement="top">
+              <button
+                className="btn btn--change-style"
+                onClick={handleChangeStyle}
+              >
+                click me <CelebrationIcon />
+              </button>
+            </Tooltip>
           </div>
-          <ul className="open__tasks__container">{openTasks}</ul>
+          <ul className="open__tasks__container">
+            {openTasks.length === 0 ? (
+              <p className="message__container">No open tasks..</p>
+            ) : (
+              openTasks
+            )}
+          </ul>
         </section>
       </div>
     </Layout>

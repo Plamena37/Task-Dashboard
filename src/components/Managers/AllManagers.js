@@ -6,6 +6,7 @@ import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { TasksContext } from "../../context/TasksContextProvider";
 import EditManagerPopUp from "./EditManagerPopUp";
 import CelebrationIcon from "@mui/icons-material/Celebration";
+import Tooltip from "@mui/material/Tooltip";
 import "./AllManagers.css";
 
 const AllManagers = () => {
@@ -163,9 +164,14 @@ const AllManagers = () => {
       <div className="foreground__container">
         <h1 className="secondary__title">Your Managers</h1>
         <div className="btn__change__container">
-          <button className="btn btn--change-style" onClick={handleChangeStyle}>
-            click me <CelebrationIcon />
-          </button>
+          <Tooltip title="Must have at least one manager" placement="top">
+            <button
+              className="btn btn--change-style"
+              onClick={handleChangeStyle}
+            >
+              click me <CelebrationIcon />
+            </button>
+          </Tooltip>
         </div>
 
         <div className="wrapper custom__slider">
