@@ -6,18 +6,7 @@ import { useContext, useState } from "react";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import AllEmployees from "./AllEmployees";
 import Layout from "../Layout/Layout";
-import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material";
 import "./EmployeesForm.css";
-
-// Create a custom theme for the Material UI components
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#24a278",
-    },
-  },
-});
 
 const EmployeesForm = () => {
   const [employeeData, setEmployeeData] = useState({
@@ -98,86 +87,84 @@ const EmployeesForm = () => {
 
   return (
     <Layout>
-      <ThemeProvider theme={theme}>
-        <section className="background">
-          <div className="section__header">
-            <h2 className="section__heading">Add Employee</h2>
-            <PersonAddAltIcon className="section__icon" />
-          </div>
+      <section className="background">
+        <div className="section__header">
+          <h2 className="section__heading">Add Employee</h2>
+          <PersonAddAltIcon className="section__icon" />
+        </div>
 
-          <form
-            className="form__employees wrapper--white"
-            onSubmit={handleSubmit}
-          >
-            <TextField
-              id="fullName"
-              name="fullName"
-              value={employeeData.fullName}
-              label="Full Name"
-              variant="outlined"
-              onChange={handleChange}
-            />
+        <form
+          className="form__employees wrapper--white"
+          onSubmit={handleSubmit}
+        >
+          <TextField
+            id="fullName"
+            name="fullName"
+            value={employeeData.fullName}
+            label="Full Name"
+            variant="outlined"
+            onChange={handleChange}
+          />
 
-            <TextField
-              id="email"
-              name="email"
-              value={employeeData.email}
-              label="Email"
-              variant="outlined"
-              type="email"
-              onChange={handleChange}
-            />
+          <TextField
+            id="email"
+            name="email"
+            value={employeeData.email}
+            label="Email"
+            variant="outlined"
+            type="email"
+            onChange={handleChange}
+          />
 
-            <TextField
-              id="phoneNumber"
-              name="phoneNumber"
-              value={employeeData.phoneNumber}
-              label="Phone Number"
-              variant="outlined"
-              type="number"
-              onChange={handleChange}
-            />
+          <TextField
+            id="phoneNumber"
+            name="phoneNumber"
+            value={employeeData.phoneNumber}
+            label="Phone Number"
+            variant="outlined"
+            type="number"
+            onChange={handleChange}
+          />
 
-            {/* In props we have "max: currentDateFinal" so that 
+          {/* In props we have "max: currentDateFinal" so that 
                 a user can not pick a future day as his birth day */}
-            <TextField
-              id="birthDate"
-              name="birthDate"
-              value={employeeData.birthDate}
-              InputLabelProps={{ shrink: true }}
-              InputProps={{
-                inputProps: { max: currentDateFinal },
-              }}
-              label="Birth Date"
-              variant="outlined"
-              type="date"
-              onChange={handleChange}
-            />
+          <TextField
+            id="birthDate"
+            name="birthDate"
+            value={employeeData.birthDate}
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              inputProps: { max: currentDateFinal },
+            }}
+            label="Birth Date"
+            variant="outlined"
+            type="date"
+            onChange={handleChange}
+          />
 
-            <TextField
-              id="monthlySalary"
-              name="monthlySalary"
-              value={employeeData.monthlySalary}
-              label="Monthly Salary $"
-              variant="outlined"
-              type="number"
-              onChange={handleChange}
-            />
+          <TextField
+            id="monthlySalary"
+            name="monthlySalary"
+            value={employeeData.monthlySalary}
+            label="Monthly Salary $"
+            variant="outlined"
+            type="number"
+            onChange={handleChange}
+          />
 
-            <Button
-              startIcon={<PersonAddAltIcon />}
-              variant="contained"
-              color="primary"
-              type="submit"
-              className="form__btn"
-            >
-              Add
-            </Button>
-          </form>
+          <Button
+            startIcon={<PersonAddAltIcon />}
+            variant="contained"
+            color="primary"
+            type="submit"
+            className="form__btn"
+          >
+            Add
+          </Button>
+        </form>
 
-          <AllEmployees />
-        </section>
-      </ThemeProvider>
+        <AllEmployees />
+      </section>
     </Layout>
   );
 };

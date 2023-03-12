@@ -39,9 +39,10 @@
 .open__tasks__list {
   background-color: rgb(36, 162, 120, 0.9);
   color: #f1f1f1;
-  padding: 0 1rem 1rem;
   border-radius: 0.2rem;
   box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.05);
+  padding: 0 2rem 1rem;
+  padding: 1rem 2rem 2rem;
 }
 
 .open__task__heading {

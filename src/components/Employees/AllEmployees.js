@@ -4,6 +4,7 @@ import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { TextField, Button } from "@mui/material";
 import EditEmployeePopUp from "./EditEmployeePopUp";
 import LoadingSpinner from "../Layout/LoadingSpinner";
+import CelebrationIcon from "@mui/icons-material/Celebration";
 import "./AllEmployees.css";
 
 const AllEmployees = () => {
@@ -21,6 +22,8 @@ const AllEmployees = () => {
   const [popUpActive, setPopUpActive] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [changeStyle, setChangeStyle] = useState(false);
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -91,7 +94,12 @@ const AllEmployees = () => {
     );
 
     return filteredAllEmployees.map((item) => (
-      <div key={item.id} className="employee__item hover--effect">
+      <div
+        key={item.id}
+        className={`employee__item ${
+          changeStyle ? "change-style" : ""
+        } hover--effect`}
+      >
         <h3 className="employee__info employee__name">Name: {item.fullName}</h3>
         <p className="employee__info">
           Email: <span className="employee__data">{item.email}</span>
@@ -135,10 +143,20 @@ const AllEmployees = () => {
     </div>
   );
 
+  // ***************** Change Style on Components *****************
+  const handleChangeStyle = () => {
+    setChangeStyle((prevState) => !prevState);
+  };
+
   return (
     <div className="wrapper">
       <div className="foreground__container">
         <h1 className="secondary__title">Your Employees</h1>
+        <div className="btn__change__container">
+          <button className="btn btn--change-style" onClick={handleChangeStyle}>
+            click me <CelebrationIcon />
+          </button>
+        </div>
 
         <div className="wrapper custom__slider">
           <div className="filter__and__delete__container">

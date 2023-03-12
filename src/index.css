@@ -7,6 +7,7 @@
 #145a43
 #333
 box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.15);
+border-radius: 73% 27% 86% 14% / 28% 70% 30% 72%;
 */
 
 body {
@@ -134,4 +135,24 @@ ul {
 .message__container {
   text-align: center;
   font-size: 1rem;
+}
+
+.btn__change__container {
+  display: flex;
+  justify-content: center;
+}
+
+.change-style {
+  border-radius: 73% 27% 86% 14% / 28% 70% 30% 72% !important;
+}
+.change-style__task {
+  border-radius: 92% 8% 98% 2% / 7% 87% 13% 93% !important;
+}
+
+.btn--change-style {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  border-radius: 40% 60% 34% 66% / 60% 53% 47% 40%;
 }

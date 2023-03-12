@@ -15,18 +15,7 @@ import { TasksContext } from "../../context/TasksContextProvider";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { ManagersContext } from "../../context/ManagersContextProvider";
 import AllManagers from "./AllManagers";
-import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material";
 import "./ManagersForm.css";
-
-// Create a custom theme for the Material UI components
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#24a278",
-    },
-  },
-});
 
 const ManagersForm = () => {
   const [managerData, setManagerData] = useState({
@@ -55,7 +44,7 @@ const ManagersForm = () => {
     });
   };
 
-    // ***************** Handle Submit Function *****************
+  // ***************** Handle Submit Function *****************
   const handleSubmit = (event) => {
     //Prevents the page from reloading
     event.preventDefault();
@@ -92,90 +81,83 @@ const ManagersForm = () => {
 
   return (
     <Layout>
-      <ThemeProvider theme={theme}>
-        <section className="background">
-          <div className="section__header">
-            <h2 className="section__heading">Add Manager</h2>
-            <ManageAccountsIcon className="section__icon" />
-          </div>
+      <section className="background">
+        <div className="section__header">
+          <h2 className="section__heading">Add Manager</h2>
+          <ManageAccountsIcon className="section__icon" />
+        </div>
 
-          <form
-            className="form__managers wrapper--white"
-            onSubmit={handleSubmit}
-          >
-            <TextField
-              id="fullName"
-              name="fullName"
-              value={managerData.fullName}
-              label="Full Name"
-              variant="outlined"
+        <form className="form__managers wrapper--white" onSubmit={handleSubmit}>
+          <TextField
+            id="fullName"
+            name="fullName"
+            value={managerData.fullName}
+            label="Full Name"
+            variant="outlined"
+            onChange={handleChange}
+          />
+
+          <TextField
+            id="email"
+            name="email"
+            value={managerData.email}
+            label="Email"
+            variant="outlined"
+            type="email"
+            onChange={handleChange}
+          />
+
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-label">
+              Working on task:
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="taskWorking"
+              name="taskWorking"
+              value={managerData.taskWorking}
+              label="Working on task:"
               onChange={handleChange}
-            />
-            
-            <TextField
-              id="email"
-              name="email"
-              value={managerData.email}
-              label="Email"
-              variant="outlined"
-              type="email"
-              onChange={handleChange}
-            />
-
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-label">
-                Working on task:
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="taskWorking"
-                name="taskWorking"
-                value={managerData.taskWorking}
-                label="Working on task:"
-                onChange={handleChange}
-              >
-                {allTasks.map((task) => (
-                  <MenuItem key={task.id} value={task.id}>
-                    {task.title}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-label">
-                Working with:
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="employeeWorking"
-                name="employeeWorking"
-                value={managerData.employeeWorking}
-                label="Working with:"
-                onChange={handleChange}
-              >
-                {allEmployees.map((employee) => (
-                  <MenuItem key={employee.id} value={employee.id}>
-                    {employee.fullName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <Button
-              startIcon={<ManageAccountsIcon />}
-              variant="contained"
-              color="primary"
-              type="submit"
-              className="submit__manager--btn"
             >
-              Add
-            </Button>
-          </form>
+              {allTasks.map((task) => (
+                <MenuItem key={task.id} value={task.id}>
+                  {task.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-          <AllManagers />
-        </section>
-      </ThemeProvider>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-label">Working with:</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="employeeWorking"
+              name="employeeWorking"
+              value={managerData.employeeWorking}
+              label="Working with:"
+              onChange={handleChange}
+            >
+              {allEmployees.map((employee) => (
+                <MenuItem key={employee.id} value={employee.id}>
+                  {employee.fullName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <Button
+            startIcon={<ManageAccountsIcon />}
+            variant="contained"
+            color="primary"
+            type="submit"
+            className="submit__manager--btn"
+          >
+            Add
+          </Button>
+        </form>
+
+        <AllManagers />
+      </section>
     </Layout>
   );
 };

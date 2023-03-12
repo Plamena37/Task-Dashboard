@@ -4,6 +4,7 @@ import { TextField, Button } from "@mui/material";
 import { TasksContext } from "../../context/TasksContextProvider";
 import EditTaskPopUp from "./EditTaskPopUp";
 import { EmployeeContext } from "../../context/EmployeesContextProvider";
+import CelebrationIcon from "@mui/icons-material/Celebration";
 import "./AllTasks.css";
 
 const AllTasks = () => {
@@ -22,6 +23,8 @@ const AllTasks = () => {
   const [popUpActive, setPopUpActive] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [changeStyle, setChangeStyle] = useState(false);
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -99,7 +102,12 @@ const AllTasks = () => {
     );
 
     return filteredAllTasks.map((item) => (
-      <div key={item.id} className="task__item hover--effect">
+      <div
+        key={item.id}
+        className={`task__item ${
+          changeStyle ? "change-style__task" : ""
+        } hover--effect`}
+      >
         {findAssigneeName(item.assignee)}
         <h3 className="task__info task__name">{item.title}</h3>
         <p className="task__desc">{item.description}</p>
@@ -136,10 +144,20 @@ const AllTasks = () => {
     </div>
   );
 
+  // ***************** Change Style on Components *****************
+  const handleChangeStyle = () => {
+    setChangeStyle((prevState) => !prevState);
+  };
+
   return (
     <div className="wrapper">
       <div className="foreground__container">
         <h1 className="secondary__title">Your Tasks</h1>
+        <div className="btn__change__container">
+          <button className="btn btn--change-style" onClick={handleChangeStyle}>
+            click me <CelebrationIcon />
+          </button>
+        </div>
 
         <div className="wrapper custom__slider">
           <div className="filter__and__delete__container">

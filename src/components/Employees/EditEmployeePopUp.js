@@ -3,18 +3,8 @@ import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { Button, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import CreateIcon from "@mui/icons-material/Create";
-import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material";
+import { useSnackbar } from "notistack";
 import "../../EditPopUp.css";
-
-// Create a custom theme for the Material UI components
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#24a278",
-    },
-  },
-});
 
 const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
   const [editedEmployee, setEditedEmployee] = useState({
@@ -27,6 +17,8 @@ const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
   });
 
   const { editEmployee } = useContext(EmployeeContext);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   // ***************** Handle Change Function *****************
   const handleChange = (event) => {
@@ -42,12 +34,16 @@ const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    enqueueSnackbar("Success!", {
+      variant: "success",
+    });
+
     editEmployee(editedEmployee);
     clear();
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <div className={popUpActive ? "popup__container active" : "hidden"}>
         <div className="exit__btn__container">
           <button className="exit__btn">
@@ -112,7 +108,7 @@ const EditEmployeePopUp = ({ employee, popUpActive, clear }) => {
           </button>
         </form>
       </div>
-    </ThemeProvider>
+    </>
   );
 };
 

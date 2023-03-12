@@ -5,6 +5,7 @@ import { EmployeeContext } from "../../context/EmployeesContextProvider";
 import { ManagersContext } from "../../context/ManagersContextProvider";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import ListIcon from "@mui/icons-material/List";
+import CelebrationIcon from "@mui/icons-material/Celebration";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -16,13 +17,15 @@ const Dashboard = () => {
 
   const [topFiveEmployees, setTopFiveEmployees] = useState([]);
 
+  const [changeStyle, setChangeStyle] = useState(false);
+
   const employeesAndTasks = {};
   let sortedTasks = [];
 
   useEffect(() => {
     /*
     Here we map over the employees and tasks to find which employee on which task is 
-    working and to get his name.
+    working and get his name.
 
     Then we check in the "employeesAndTasks" object if we have an employee with that name as a key. 
     If we don't we create one and assign him a value of 1 (for one task),
@@ -35,12 +38,20 @@ const Dashboard = () => {
 
           if (!employeesAndTasks[employeeName]) {
             employeesAndTasks[employeeName] = 1;
+            // employeesAndTasks[employeeName] = {
+            // tasks: 1,
+            // date: task.dueDate
+            // }
           } else if (employeesAndTasks[employeeName]) {
             employeesAndTasks[employeeName] += 1;
+            // employeesAndTasks[employeeName]= {
+            // tasks: employeesAndTasks[employeeName].tasks + 1
+            // };
           }
         }
       });
     });
+    // console.log(employeesAndTasks);
 
     /*
     We loop over the "employeesAndTasks" object and push and array with the name and 
@@ -65,16 +76,26 @@ const Dashboard = () => {
 
       return (
         <li className="top__employees__list">
-          <span className="top__employees">{employee}</span>, finished{" "}
-          <span className="top__employees">{taskCount}</span> tasks 🎉🎉🎉
+          <span className="top__employees">{employee}</span>, working on{" "}
+          <span className="top__employees">{taskCount}</span>{" "}
+          {taskCount === 1 ? "task" : "tasks"} 🎉🎉🎉
         </li>
       );
     });
   };
 
+  // ***************** Change Style on Components *****************
+  const handleChangeStyle = () => {
+    setChangeStyle((prevState) => !prevState);
+  };
+
   let openTasks = allTasks.map((task) => {
     return (
-      <li className="open__tasks__list hover--effect">
+      <li
+        className={`open__tasks__list ${
+          changeStyle ? "change-style" : ""
+        } hover--effect`}
+      >
         <h4 className="open__task__heading">{task.title}</h4>
         <p className="open__tasks__team">
           Main Team:{" "}
@@ -138,6 +159,14 @@ const Dashboard = () => {
           <div className="section__header">
             <h2 className="section__heading">Open Tasks</h2>
             <ListIcon className="section__icon" />
+          </div>
+          <div className="btn__change__container">
+            <button
+              className="btn btn--change-style"
+              onClick={handleChangeStyle}
+            >
+              click me <CelebrationIcon />
+            </button>
           </div>
           <ul className="open__tasks__container">{openTasks}</ul>
         </section>
