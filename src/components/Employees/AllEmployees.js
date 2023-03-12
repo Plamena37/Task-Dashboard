@@ -13,9 +13,9 @@ const AllEmployees = () => {
     id: "",
     fullName: "",
     email: "",
-    phoneNumber: 0,
+    phoneNumber: "",
     birthDate: "",
-    monthlySalary: 0,
+    monthlySalary: "",
   });
 
   const { allEmployees, deleteEmployee } = useContext(EmployeeContext);

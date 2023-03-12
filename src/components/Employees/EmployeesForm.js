@@ -13,9 +13,9 @@ const EmployeesForm = () => {
     id: uuidv4(),
     fullName: "",
     email: "",
-    phoneNumber: 0,
+    phoneNumber: "",
     birthDate: "",
-    monthlySalary: 0,
+    monthlySalary: "",
   });
 
   const { addToEmployeesData } = useContext(EmployeeContext);
