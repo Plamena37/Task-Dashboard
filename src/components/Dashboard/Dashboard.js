@@ -23,6 +23,7 @@ const Dashboard = () => {
   const employeesAndTasks = {};
   let sortedTasks = [];
   let tasksFinishedThirtydaysAgo = [];
+  let unfinishedTasks = [];
 
   useEffect(() => {
     /*
@@ -72,22 +73,7 @@ const Dashboard = () => {
     */
     sortedTasks.sort((a, b) => b[1] - a[1]);
     setTopFiveEmployees(sortedTasks.slice(0, 5));
-  }, []);
-
-  // ***************** Render Top Five Employees Function *****************
-  const renderTopFiveEmployees = () => {
-    return topFiveEmployees.map((employeeArray) => {
-      let [employee, taskCount, dueDate] = employeeArray;
-
-      return (
-        <li className="top__employees__list">
-          <span className="top__employees">{employee}</span>, working on{" "}
-          <span className="top__employees">{taskCount}</span>{" "}
-          {taskCount === 1 ? "task" : "tasks"}🎉
-        </li>
-      );
-    });
-  };
+  }, [allEmployees]);
 
   // ***************** Change Style on Components *****************
   const handleChangeStyle = () => {
@@ -115,12 +101,40 @@ const Dashboard = () => {
         convertDueDate.getTime() < todaysDate.getTime() &&
         convertDueDate.getTime() >= priorThirtyDaysDate.getTime();
 
+      let checkForWorkFlow = convertDueDate.getTime() > todaysDate.getTime();
+
       if (checkForDate) {
         tasksFinishedThirtydaysAgo.push([employee, taskCount]);
+      }
+      if (checkForWorkFlow) {
+        unfinishedTasks.push([employee, taskCount]);
       }
     });
   };
   handleTopFiveEmployees();
+
+  // ***************** Render Top Five Employees Function *****************
+  const renderTopFiveEmployees = () => {
+    return topFiveEmployees.map((employeeArray) => {
+      let [employee, taskCount] = employeeArray;
+      console.log(unfinishedTasks);
+      // let todaysDate = new Date();
+      // let taskDueDate = new Date(dueDate);
+
+      // If the task's due date has already passed we return and don't show it
+      // if (taskDueDate.getTime() < todaysDate.getTime()) {
+      //   return;
+      // }
+
+      return (
+        <li className="top__employees__list">
+          <span className="top__employees">{employee}</span>, credit for{" "}
+          <span className="top__employees">{taskCount}</span>{" "}
+          {taskCount === 1 ? "task" : "tasks"}🎉
+        </li>
+      );
+    });
+  };
 
   // ***************** Render five Employees who completed tasks before 30 days *****************
   let employeesWhoCompletedTasksBefore30Days = tasksFinishedThirtydaysAgo.map(
