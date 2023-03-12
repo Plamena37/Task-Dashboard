@@ -14,7 +14,14 @@
 .top__employees__container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  justify-items: center;
+  gap: 1rem;
   list-style: decimal;
+}
+
+.top__employees__container.special {
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .top__employees__list {

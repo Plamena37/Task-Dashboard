@@ -6,6 +6,7 @@ import { ManagersContext } from "../../context/ManagersContextProvider";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import ListIcon from "@mui/icons-material/List";
 import CelebrationIcon from "@mui/icons-material/Celebration";
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -21,6 +22,7 @@ const Dashboard = () => {
 
   const employeesAndTasks = {};
   let sortedTasks = [];
+  let tasksFinishedThirtydaysAgo = [];
 
   useEffect(() => {
     /*
@@ -28,8 +30,8 @@ const Dashboard = () => {
     working and get his name.
 
     Then we check in the "employeesAndTasks" object if we have an employee with that name as a key. 
-    If we don't we create one and assign him a value of 1 (for one task),
-    if we already have, we add +1 to the other tasks.
+    If we don't we create one and assign him a value of 1 (for one task) and assign the due date of the task,
+    if we already have, we add +1 to the other tasks and again add the due date of the current task.
     */
     allEmployees.map((employee) => {
       allTasks.map((task) => {
@@ -37,28 +39,31 @@ const Dashboard = () => {
           let employeeName = employee.fullName;
 
           if (!employeesAndTasks[employeeName]) {
-            employeesAndTasks[employeeName] = 1;
-            // employeesAndTasks[employeeName] = {
-            // tasks: 1,
-            // date: task.dueDate
-            // }
+            employeesAndTasks[employeeName] = {
+              tasks: 1,
+              date: task.dueDate,
+            };
           } else if (employeesAndTasks[employeeName]) {
-            employeesAndTasks[employeeName] += 1;
-            // employeesAndTasks[employeeName]= {
-            // tasks: employeesAndTasks[employeeName].tasks + 1
-            // };
+            employeesAndTasks[employeeName] = {
+              tasks: employeesAndTasks[employeeName].tasks + 1,
+              date: task.dueDate,
+            };
           }
         }
       });
     });
-    // console.log(employeesAndTasks);
 
     /*
-    We loop over the "employeesAndTasks" object and push and array with the name and 
-    tasks and we get [["Plamena", 1], ["Hristo", 3]]
+    We loop over the "employeesAndTasks" object and push and array with the name, 
+    tasks and due date. For example: [["Plamena", 1, "2023-04-29"], ["Hristo", 3, "2023-03-10"]]
    */
-    for (const [employee, task] of Object.entries(employeesAndTasks)) {
-      sortedTasks.push([employee, task]);
+    for (const [employeeName, employeeDataObj] of Object.entries(
+      employeesAndTasks
+    )) {
+      let employeeTasks = employeeDataObj.tasks;
+      let employeeDueDate = employeeDataObj.date;
+
+      sortedTasks.push([employeeName, employeeTasks, employeeDueDate]);
     }
 
     /*
@@ -72,13 +77,13 @@ const Dashboard = () => {
   // ***************** Render Top Five Employees Function *****************
   const renderTopFiveEmployees = () => {
     return topFiveEmployees.map((employeeArray) => {
-      let [employee, taskCount] = employeeArray;
+      let [employee, taskCount, dueDate] = employeeArray;
 
       return (
         <li className="top__employees__list">
           <span className="top__employees">{employee}</span>, working on{" "}
           <span className="top__employees">{taskCount}</span>{" "}
-          {taskCount === 1 ? "task" : "tasks"} 🎉🎉🎉
+          {taskCount === 1 ? "task" : "tasks"}🎉
         </li>
       );
     });
@@ -89,7 +94,61 @@ const Dashboard = () => {
     setChangeStyle((prevState) => !prevState);
   };
 
+  // ***************** Handle the employees who have done the most tasks in the last 30 days *****************
+  const handleTopFiveEmployees = () => {
+    return topFiveEmployees.map((employeeArray) => {
+      let [employee, taskCount, dueDate] = employeeArray;
+
+      /*
+      Here we get the current date, convert the "dueDate" from the tasks date, and create a new date based on
+      today's date from which we subtract 30 days.
+      Then we make a check if the "dueDate" is between the today's date or 30 days ago, and if so we push into
+      new array the employee name and the tasks he made. 
+      */
+      let todaysDate = new Date();
+      let convertDueDate = new Date(dueDate);
+      let priorThirtyDaysDate = new Date(
+        new Date().setDate(todaysDate.getDate() - 30)
+      );
+
+      let checkForDate =
+        convertDueDate.getTime() < todaysDate.getTime() &&
+        convertDueDate.getTime() >= priorThirtyDaysDate.getTime();
+
+      if (checkForDate) {
+        tasksFinishedThirtydaysAgo.push([employee, taskCount]);
+      }
+    });
+  };
+  handleTopFiveEmployees();
+
+  // ***************** Render five Employees who completed tasks before 30 days *****************
+  let employeesWhoCompletedTasksBefore30Days = tasksFinishedThirtydaysAgo.map(
+    (employee) => {
+      let [employeeName, tasks] = employee;
+
+      return (
+        <li className="top__employees__list">
+          <span className="top__employees">{employeeName}</span> finished{" "}
+          <span className="top__employees">{tasks} </span>
+          {tasks === 1 ? "task " : "tasks "}
+          in the last 30 days🎉
+        </li>
+      );
+    }
+  );
+
   let openTasks = allTasks.map((task) => {
+    let taskDueDateString = task.dueDate;
+
+    let todaysDate = new Date();
+    let taskDueDate = new Date(taskDueDateString);
+
+    // If the task's due date has already passed we return and don't show it
+    if (taskDueDate.getTime() < todaysDate.getTime()) {
+      return;
+    }
+
     return (
       <li
         className={`open__tasks__list ${
@@ -145,13 +204,27 @@ const Dashboard = () => {
       <div className="background dashboard__container">
         <section className="wrapper container top__employees">
           <div className="section__header">
-            <h2 className="section__heading">Top 5 Employees</h2>
+            <h2 className="section__heading">Employees Workflow</h2>
             <VolunteerActivismIcon className="section__icon" />
           </div>
           <ul className="top__employees__container">
             {topFiveEmployees.length === 0
               ? "No employees"
               : renderTopFiveEmployees()}
+          </ul>
+        </section>
+
+        <section className="wrapper container top__employees">
+          <div className="section__header">
+            <h2 className="section__heading">
+              Completed tasks in the last 30 days
+            </h2>
+            <PlaylistAddCheckIcon className="section__icon" />
+          </div>
+          <ul className="top__employees__container special">
+            {employeesWhoCompletedTasksBefore30Days.length === 0
+              ? "No tasks finished in the last 30 days"
+              : employeesWhoCompletedTasksBefore30Days}
           </ul>
         </section>
 
